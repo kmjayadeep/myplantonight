@@ -1,16 +1,19 @@
-import {Route,Router} from 'react-router'
+import {Route,IndexRoute,Router,browserHistory} from 'react-router'
 import React from 'react'
 
 import AppHandler from './components/AppHandler.jsx'
 import Home from './components/Home.jsx'
 
-const Routes = (props)=>{
-	return (
-		<Router {...props}>
-			<Route path="/" component={AppHandler}/>
-			<Route path="/home" component={Home}/>
-		</Router>
-	)
-}
+const routes = (
+	<Route path="/" component={AppHandler}>
+		<IndexRoute component={Home}/>
+	</Route>
+)
 
-export default Routes
+export default class Routes extends React.Component{
+	render(){
+		return (
+			<Router history={browserHistory} routes={routes}/>
+		)
+	}
+}
