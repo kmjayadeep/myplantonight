@@ -1,5 +1,5 @@
-let $ = requrie('jquery')
-let promise = requrie('es6-promise')
+let $ = require('jquery')
+let promise = require('es6-promise')
 let resourceUrl = "http://localhost:3000/api/bar";
 
 module.exports = {

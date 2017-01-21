@@ -1,5 +1,5 @@
-import Hello from './components/Hello.jsx'
+import Home from './components/Home.jsx'
 import React from 'react';
 import ReactDOM from 'react-dom'
 
-ReactDOM.render(<Hello/>, document.getElementById('hello'));
+ReactDOM.render(<Home/>, document.getElementById('app'));
