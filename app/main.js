@@ -1,5 +1,10 @@
-import Home from './components/Home.jsx'
 import React from 'react';
 import ReactDOM from 'react-dom'
+import {browserHistory} from 'react-router'
 
-ReactDOM.render(<Home/>, document.getElementById('app'));
+import Routes from './Routes'
+
+ReactDOM.render(
+	<Routes history={browserHistory} />,
+	document.getElementById('app')
+)
