@@ -32966,11 +32966,7 @@
 		_createClass(Home, [{
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					'h1',
-					null,
-					'Hello'
-				);
+				return _react2.default.createElement('h1', null);
 			}
 		}]);
 
@@ -38052,8 +38048,25 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'app-container' },
-					_react2.default.createElement('header', null),
+					{ className: 'container' },
+					_react2.default.createElement(
+						'header',
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Nav,
+							{ bsStyle: 'pills', activeKey: 1 },
+							_react2.default.createElement(
+								_reactBootstrap.NavItem,
+								{ eventKey: 1, href: '/' },
+								'Home'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.NavItem,
+								{ eventKey: 2, href: '/login' },
+								'Login'
+							)
+						)
+					),
 					_react2.default.createElement(
 						'div',
 						{ className: 'app-content' },
