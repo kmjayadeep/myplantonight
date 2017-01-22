@@ -21505,22 +21505,35 @@
 
 	var $ = __webpack_require__(180);
 	var promise = __webpack_require__(181);
-	var resourceUrl = "http://localhost:3000/api/bar";
+	var resourceUrl = "http://localhost:3000/api/";
 
 	module.exports = {
-		search: function search(query) {
-			var Promise = promise.Promise;
-			return new Promise(function (resolve, reject) {
-				$.ajax({
-					url: resourceUrl + '/search/' + query,
-					method: 'GET',
-					dataType: 'json',
-					contentType: 'application/json',
-					success: resolve,
-					error: reject
-				});
-			});
-		}
+	    search: function search(query) {
+	        var Promise = promise.Promise;
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: resourceUrl + 'bar/search/' + query,
+	                method: 'GET',
+	                dataType: 'json',
+	                contentType: 'application/json',
+	                success: resolve,
+	                error: reject
+	            });
+	        });
+	    },
+	    account: function account() {
+	        var Promise = promise.Promise;
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: resourceUrl + '/profile/',
+	                method: 'GET',
+	                dataType: 'json',
+	                contentType: 'application/json',
+	                success: resolve,
+	                error: reject
+	            });
+	        });
+	    }
 	};
 
 /***/ },
@@ -38180,6 +38193,10 @@
 
 	var _reactBootstrap = __webpack_require__(243);
 
+	var _barService = __webpack_require__(179);
+
+	var _barService2 = _interopRequireDefault(_barService);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38194,12 +38211,37 @@
 		function AppHandler() {
 			_classCallCheck(this, AppHandler);
 
-			return _possibleConstructorReturn(this, (AppHandler.__proto__ || Object.getPrototypeOf(AppHandler)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (AppHandler.__proto__ || Object.getPrototypeOf(AppHandler)).call(this));
+
+			_this.state = {
+				auth: '#',
+				isLoggedIn: false
+			};
+			_barService2.default.account().then(function (profile) {
+				console.log(profile);
+				_this.setState({
+					auth: '/auth/logout',
+					isLoggedIn: true,
+					profile: profile
+				});
+			}).catch(function (err) {
+				_this.setState({
+					auth: '/auth/login',
+					isLoggedIn: false
+				});
+			});
+			return _this;
 		}
 
 		_createClass(AppHandler, [{
 			key: 'render',
 			value: function render() {
+				var loginButton = _react2.default.createElement(
+					_reactBootstrap.NavItem,
+					{ eventKey: 2, href: this.state.auth },
+					this.state.isLoggedIn ? 'Logout' : 'Login'
+				);
+				if (this.state.auth == '#') loginButton = '';
 				return _react2.default.createElement(
 					'div',
 					{ className: 'container' },
@@ -38214,11 +38256,7 @@
 								{ eventKey: 1, href: '/' },
 								'Home'
 							),
-							_react2.default.createElement(
-								_reactBootstrap.NavItem,
-								{ eventKey: 2 },
-								'Login'
-							)
+							loginButton
 						)
 					),
 					_react2.default.createElement(

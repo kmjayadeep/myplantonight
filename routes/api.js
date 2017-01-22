@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Yelp = require('yelp')
+var User = require('../models/user')
 
 var yelp = new Yelp({
     consumer_key: "qXHtGS14FEUgQCaQx1NLhQ",
@@ -26,5 +27,20 @@ router.get('/bar/search/:query', function(req, res, next) {
    		res.json(extBars)
     })
 });
+
+router.get('/profile', function(req, res) {
+    console.log(req.user)
+    if(!req.isAuthenticated())
+        return res.send('not')
+    var data = {
+        loggedIn: true,
+        user: req.user
+    }
+    User.findOne({
+        _id: data.user._id
+    }, function(err, user) {
+        res.json(user)
+    })
+})
 
 module.exports = router;
