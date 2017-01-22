@@ -32989,7 +32989,8 @@
 				}).catch(function (err) {
 					console.log(err);
 					_this2.setState({
-						isLoading: false
+						isLoading: false,
+						bars: []
 					});
 				});
 			}
