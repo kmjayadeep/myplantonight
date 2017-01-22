@@ -1,3 +1,12 @@
 body{
 	background: url('../assets/bg.jpg')
 }
+.heading{
+	color:#1c6279;
+	font-weight: bold
+}
+.icons{
+	font-size: 2.5em;
+	color:#12a09c;
+	margin:1em;
+}
