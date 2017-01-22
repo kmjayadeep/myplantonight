@@ -5,7 +5,8 @@ var schema = new mongoose.Schema({
     email: String,
     facebook: {
         id: String
-    }
+    },
+    location: String
 })
 
 module.exports = mongoose.model('user', schema)

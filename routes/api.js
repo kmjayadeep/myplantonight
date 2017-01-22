@@ -26,18 +26,24 @@ router.get('/bar/search/:query', function(req, res, next) {
         });
    		res.json(extBars)
     })
+    if(req.user){
+        User.findOne({
+            _id:req.user._id
+        },function(err,user){
+            if(err)
+                return
+            user.location = query
+            user.save()
+        })
+    }
 });
 
 router.get('/profile', function(req, res) {
     console.log(req.user)
     if(!req.isAuthenticated())
-        return res.send('not')
-    var data = {
-        loggedIn: true,
-        user: req.user
-    }
+        return res.status(401).json('not')
     User.findOne({
-        _id: data.user._id
+        _id: req.user._id
     }, function(err, user) {
         res.json(user)
     })

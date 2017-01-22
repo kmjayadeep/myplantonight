@@ -20,7 +20,7 @@ module.exports = {
         let Promise = promise.Promise
         return new Promise((resolve, reject) => {
             $.ajax({
-                url: resourceUrl + '/profile/',
+                url: resourceUrl + 'profile/',
                 method: 'GET',
                 dataType: 'json',
                 contentType: 'application/json',

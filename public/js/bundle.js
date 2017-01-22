@@ -21525,7 +21525,7 @@
 	        var Promise = promise.Promise;
 	        return new Promise(function (resolve, reject) {
 	            $.ajax({
-	                url: resourceUrl + '/profile/',
+	                url: resourceUrl + 'profile/',
 	                method: 'GET',
 	                dataType: 'json',
 	                contentType: 'application/json',
@@ -33010,6 +33010,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				console.log(this.props.profile);
 				return _react2.default.createElement(
 					'div',
 					null,
