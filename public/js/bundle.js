@@ -32962,7 +32962,8 @@
 			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 
 			_this.state = {
-				isLoading: false
+				isLoading: false,
+				bars: []
 			};
 			_this.search = _this.search.bind(_this);
 			return _this;
@@ -32982,7 +32983,8 @@
 				_barService2.default.search(query).then(function (res) {
 					console.log(res);
 					_this2.setState({
-						isLoading: false
+						isLoading: false,
+						bars: res
 					});
 				}).catch(function (err) {
 					console.log(err);
@@ -32995,57 +32997,133 @@
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					_reactBootstrap.Well,
-					{ bsSize: 'large' },
+					'div',
+					null,
 					_react2.default.createElement(
-						'h1',
-						{ className: 'heading text-center' },
-						'Whats your plan tonight?'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'icons text-center' },
-						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'glass' })
-					),
-					_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
+						_reactBootstrap.Well,
+						{ bsSize: 'large' },
 						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ md: 8, mdOffset: 2 },
+							'h1',
+							{ className: 'heading text-center' },
+							'Whats your plan tonight?'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'icons text-center' },
+							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'glass' })
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Row,
+							null,
 							_react2.default.createElement(
-								'form',
-								{ onSubmit: this.search },
+								_reactBootstrap.Col,
+								{ md: 8, mdOffset: 2 },
 								_react2.default.createElement(
-									_reactBootstrap.FormGroup,
-									null,
+									'form',
+									{ onSubmit: this.search },
 									_react2.default.createElement(
-										_reactBootstrap.InputGroup,
+										_reactBootstrap.FormGroup,
 										null,
-										_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'search-input' }),
 										_react2.default.createElement(
-											_reactBootstrap.InputGroup.Button,
+											_reactBootstrap.InputGroup,
 											null,
+											_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', id: 'search-input' }),
 											_react2.default.createElement(
-												_reactBootstrap.Button,
-												{
-													bsStyle: 'primary',
-													disabled: this.state.isLoading,
-													onClick: this.search
-												},
-												this.state.isLoading ? 'Loading' : 'Search'
+												_reactBootstrap.InputGroup.Button,
+												null,
+												_react2.default.createElement(
+													_reactBootstrap.Button,
+													{
+														bsStyle: 'primary',
+														disabled: this.state.isLoading,
+														onClick: this.search
+													},
+													this.state.isLoading ? 'Loading' : 'Search'
+												)
 											)
 										)
 									)
 								)
 							)
 						)
-					)
+					),
+					_react2.default.createElement(BarList, { bars: this.state.bars })
 				);
 			}
 		}]);
 
 		return Home;
+	}(_react2.default.Component);
+
+	var BarList = function (_React$Component2) {
+		_inherits(BarList, _React$Component2);
+
+		function BarList() {
+			_classCallCheck(this, BarList);
+
+			return _possibleConstructorReturn(this, (BarList.__proto__ || Object.getPrototypeOf(BarList)).call(this));
+		}
+
+		_createClass(BarList, [{
+			key: 'render',
+			value: function render() {
+				var bars = this.props.bars.map(function (bar, index) {
+					return _react2.default.createElement(Bar, { bar: bar, key: index });
+				});
+				return _react2.default.createElement(
+					_reactBootstrap.Panel,
+					null,
+					bars
+				);
+			}
+		}]);
+
+		return BarList;
+	}(_react2.default.Component);
+
+	var Bar = function (_React$Component3) {
+		_inherits(Bar, _React$Component3);
+
+		function Bar() {
+			_classCallCheck(this, Bar);
+
+			return _possibleConstructorReturn(this, (Bar.__proto__ || Object.getPrototypeOf(Bar)).call(this));
+		}
+
+		_createClass(Bar, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					_reactBootstrap.Media,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Media.Left,
+						{ align: 'middle' },
+						_react2.default.createElement(
+							'a',
+							{ href: this.props.bar.url, target: '_blank' },
+							_react2.default.createElement('img', { width: 64, height: 64, src: this.props.bar.image_url, alt: 'Image' })
+						)
+					),
+					_react2.default.createElement(
+						_reactBootstrap.Media.Body,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Media.Heading,
+							null,
+							this.props.bar.name
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							this.props.bar.snippet
+						)
+					)
+				);
+			}
+		}]);
+
+		return Bar;
 	}(_react2.default.Component);
 
 	exports.default = Home;
