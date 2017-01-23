@@ -43,6 +43,8 @@ class Home extends React.Component {
 			})
 	}
 	componentDidUpdate(){
+		if(!this.props.profile)
+			return
 		let location = this.props.profile.location
 		if(this.state.loaded)
 			return

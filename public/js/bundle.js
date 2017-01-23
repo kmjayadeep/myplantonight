@@ -33033,6 +33033,7 @@
 		}, {
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate() {
+				if (!this.props.profile) return;
 				var location = this.props.profile.location;
 				if (this.state.loaded) return;
 				(0, _jquery2.default)('#search-input').val(location);
