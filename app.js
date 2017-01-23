@@ -10,7 +10,12 @@ var User = require('./models/user')
 var passport = require('passport')
 var session = require('cookie-session')
 // var MongoStore = require('connect-mongostore')(session);
-mongoose.connect(config.dbUrl)
+mongoose.connect(config.dbUrl,function(err){
+    if(err)
+        console.log(err)
+    else
+        console.log('connected')
+})
 
 
 var api = require('./routes/api');
