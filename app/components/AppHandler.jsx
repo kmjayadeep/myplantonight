@@ -1,6 +1,7 @@
 import React from 'react'
 import {Row,Col,Nav,NavItem} from 'react-bootstrap'
 import barService from '../services/barService'
+import Home from './Home.jsx'
 
 export default class AppHandler extends React.Component{
 	constructor(){
@@ -38,7 +39,9 @@ export default class AppHandler extends React.Component{
 						{loginButton}
 					</Nav>
 				</header>
-				<div className="app-content">{this.props.children}</div>
+				<div className="app-content">
+					<Home profile={this.state.profile}/>
+				</div>
 				<footer>
 				</footer>
 			</div>

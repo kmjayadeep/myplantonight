@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 
 import Routes from './Routes'
+import AppHandler from './components/AppHandler.jsx'
 
 ReactDOM.render(
-	<Routes/>,
+	<AppHandler/>,
 	document.getElementById('app')
 )

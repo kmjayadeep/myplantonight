@@ -58,9 +58,13 @@
 
 	var _Routes2 = _interopRequireDefault(_Routes);
 
+	var _AppHandler = __webpack_require__(241);
+
+	var _AppHandler2 = _interopRequireDefault(_AppHandler);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_Routes2.default, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(_AppHandler2.default, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */,
@@ -32969,14 +32973,16 @@
 	var Home = function (_React$Component) {
 		_inherits(Home, _React$Component);
 
-		function Home() {
+		function Home(props) {
 			_classCallCheck(this, Home);
 
-			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
+			var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
 			_this.state = {
 				isLoading: false,
-				bars: []
+				bars: [],
+				loaded: false
+
 			};
 			_this.search = _this.search.bind(_this);
 			return _this;
@@ -32987,8 +32993,8 @@
 			value: function search(event) {
 				var _this2 = this;
 
-				event.preventDefault();
 				if (this.state.isLoading) return;
+				if (event) event.preventDefault();
 				var query = (0, _jquery2.default)('#search-input').val();
 				this.setState({
 					isLoading: true
@@ -32997,20 +33003,29 @@
 					console.log(res);
 					_this2.setState({
 						isLoading: false,
-						bars: res
+						bars: res,
+						loaded: true
 					});
 				}).catch(function (err) {
 					console.log(err);
 					_this2.setState({
 						isLoading: false,
-						bars: []
+						bars: [],
+						loaded: true
 					});
 				});
 			}
 		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate() {
+				var location = this.props.profile.location;
+				if (this.state.loaded) return;
+				(0, _jquery2.default)('#search-input').val(location);
+				this.search();
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				console.log(this.props.profile);
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -38198,6 +38213,10 @@
 
 	var _barService2 = _interopRequireDefault(_barService);
 
+	var _Home = __webpack_require__(184);
+
+	var _Home2 = _interopRequireDefault(_Home);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38263,7 +38282,7 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'app-content' },
-						this.props.children
+						_react2.default.createElement(_Home2.default, { profile: this.state.profile })
 					),
 					_react2.default.createElement('footer', null)
 				);

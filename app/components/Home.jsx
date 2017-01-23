@@ -4,17 +4,21 @@ import {Well,Glyphicon,Button,FormGroup,FormControl,InputGroup,Row,Col,ListGroup
 import $ from 'jquery'
 
 class Home extends React.Component {
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state = {
 			isLoading:false,
-			bars:[]
+			bars:[],
+			loaded:false
+
 		}
 		this.search = this.search.bind(this)
 	}
 	search(event){
-		event.preventDefault()
-		if(this.state.isLoading) return
+		if(this.state.isLoading)
+			return
+		if(event)
+			event.preventDefault()
 		let query = $('#search-input').val()
 		this.setState({
 			isLoading:true
@@ -24,19 +28,27 @@ class Home extends React.Component {
 				console.log(res)
 				this.setState({
 					isLoading:false,
-					bars:res
+					bars:res,
+					loaded:true
 				})
 			})
 			.catch((err)=>{
 				console.log(err)
 				this.setState({
 					isLoading:false,
-					bars:[]
+					bars:[],
+					loaded:true
 				})
 			})
 	}
+	componentDidUpdate(){
+		let location = this.props.profile.location
+		if(this.state.loaded)
+			return
+		$('#search-input').val(location)
+		this.search()
+	}
 	render() {
-		console.log(this.props.profile)
 		return (
 			<div>
 				<Well bsSize="large">
