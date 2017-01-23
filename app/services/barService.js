@@ -28,5 +28,19 @@ module.exports = {
                 error: reject
             })
         })
+    },
+    going: (bar) => {
+        let Promise = promise.Promise
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: resourceUrl + 'bar/',
+                method: 'PUT',
+                dataType: 'json',
+                data: JSON.stringify(bar),
+                contentType: 'application/json',
+                success: resolve,
+                error: reject
+            })
+        })
     }
 }

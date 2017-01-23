@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Yelp = require('yelp')
 var User = require('../models/user')
+var Bar = require('../models/bar')
 
 var yelp = new Yelp({
     consumer_key: "qXHtGS14FEUgQCaQx1NLhQ",
@@ -37,6 +38,31 @@ router.get('/bar/search/:query', function(req, res, next) {
         })
     }
 });
+
+router.put('/bar',function(req,res){
+    let bar = new Bar(req.body)
+    console.log(bar)
+    if(req.body._id){
+        Bar.findOne({
+            _id:bar._id
+        },function(err,b){
+            if(err)
+                return res.sendStatus(400)
+            b.attending = bar.attending
+            b.save(function(err,bar){
+                if(err)
+                    return res.sendStatus(400)
+                res.json(bar)
+            })
+        })
+    }else{
+        bar.save(function(err,b){
+            if(err)
+                return res.sendStatus(400)
+            return res.json(b)
+        })
+    }
+})
 
 router.get('/profile', function(req, res) {
     console.log(req.user)

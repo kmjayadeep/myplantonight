@@ -21537,6 +21537,20 @@
 	                error: reject
 	            });
 	        });
+	    },
+	    going: function going(bar) {
+	        var Promise = promise.Promise;
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: resourceUrl + 'bar/',
+	                method: 'PUT',
+	                dataType: 'json',
+	                data: JSON.stringify(bar),
+	                contentType: 'application/json',
+	                success: resolve,
+	                error: reject
+	            });
+	        });
 	    }
 	};
 
@@ -33027,6 +33041,8 @@
 		}, {
 			key: 'going',
 			value: function going(bar) {
+				var _this3 = this;
+
 				console.log('going');
 				if (!this.props.profile) return;
 				if (bar.attending.indexOf(this.props.profile._id) == -1) {
@@ -33038,14 +33054,16 @@
 					});
 				}
 				console.log(bar);
-				var newBars = this.state.bars.map(function (b) {
-					if (b.name == bar.name) return bar;
-					return b;
-				});
-				console.log(newBars);
-				this.setState({
-					bars: newBars
-				});
+				_barService2.default.going(bar).then(function (newBar) {
+					var newBars = _this3.state.bars.map(function (b) {
+						if (b.name == newBar.name) return newBar;
+						return b;
+					});
+					console.log(newBars);
+					_this3.setState({
+						bars: newBars
+					});
+				}).catch(function () {});
 			}
 		}, {
 			key: 'render',
@@ -33121,10 +33139,10 @@
 		_createClass(BarList, [{
 			key: 'render',
 			value: function render() {
-				var _this4 = this;
+				var _this5 = this;
 
 				var bars = this.props.bars.map(function (bar, index) {
-					return _react2.default.createElement(Bar, { bar: bar, key: index, going: _this4.props.going });
+					return _react2.default.createElement(Bar, { bar: bar, key: index, going: _this5.props.going });
 				});
 				return _react2.default.createElement(
 					_reactBootstrap.Panel,

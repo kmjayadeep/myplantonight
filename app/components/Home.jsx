@@ -52,7 +52,7 @@ class Home extends React.Component {
 	going(bar){
 		console.log('going')
 		if(!this.props.profile)
-			return	
+			return
 		if(bar.attending.indexOf(this.props.profile._id)==-1){
 			bar.attending.push(this.props.profile._id)
 		}else{
@@ -62,15 +62,18 @@ class Home extends React.Component {
 			})
 		}
 		console.log(bar)
-		let newBars = this.state.bars.map(b=>{
-			if(b.name==bar.name)
-				return bar
-			return b
-		})
-		console.log(newBars)
-		this.setState({
-			bars:newBars
-		})
+		barService.going(bar)
+		.then((newBar)=>{
+			let newBars = this.state.bars.map(b=>{
+				if(b.name==newBar.name)
+					return newBar
+				return b
+			})
+			console.log(newBars)
+			this.setState({
+				bars:newBars
+			})
+		}).catch(()=>{})
 	}
 	render() {
 		return (
