@@ -32980,22 +32980,27 @@
 
 			_this.state = {
 				isLoading: false,
-				bars: [],
-				loaded: false
-
+				bars: []
 			};
 			_this.search = _this.search.bind(_this);
-			_this.going = _this.going.bind(_this);
 			return _this;
 		}
 
 		_createClass(Home, [{
+			key: 'query',
+			value: function query() {
+				console.log(this.props);
+				if (this.props.profile) {
+					(0, _jquery2.default)('#search-input').val(this.props.profile.location);
+					this.search();
+				}
+			}
+		}, {
 			key: 'search',
 			value: function search(event) {
 				var _this2 = this;
 
 				if (this.state.isLoading) return;
-				if (event) event.preventDefault();
 				var query = (0, _jquery2.default)('#search-input').val();
 				this.setState({
 					isLoading: true
@@ -33004,47 +33009,14 @@
 					console.log(res);
 					_this2.setState({
 						isLoading: false,
-						bars: res,
-						loaded: true
+						bars: res
 					});
 				}).catch(function (err) {
 					console.log(err);
 					_this2.setState({
 						isLoading: false,
-						bars: [],
-						loaded: true
+						bars: []
 					});
-				});
-			}
-		}, {
-			key: 'componentDidUpdate',
-			value: function componentDidUpdate() {
-				var location = this.props.profile.location;
-				if (this.state.loaded) return;
-				(0, _jquery2.default)('#search-input').val(location);
-				this.search();
-			}
-		}, {
-			key: 'going',
-			value: function going(bar) {
-				console.log('going');
-				if (!this.props.profile) return;
-				if (bar.attending.indexOf(this.props.profile._id) == -1) {
-					bar.attending.push(this.props.profile._id);
-				} else {
-					bar.attending[bar.attending.indexOf(this.props.profile._id)] = null;
-					bar.attending = bar.attending.filter(function (b) {
-						return b != null;
-					});
-				}
-				console.log(bar);
-				var newBars = this.state.bars.map(function (b) {
-					if (b.name == bar.name) return bar;
-					return b;
-				});
-				console.log(newBars);
-				this.setState({
-					bars: newBars
 				});
 			}
 		}, {
@@ -33101,7 +33073,7 @@
 							)
 						)
 					),
-					_react2.default.createElement(BarList, { bars: this.state.bars, going: this.going })
+					_react2.default.createElement(BarList, { bars: this.state.bars })
 				);
 			}
 		}]);
@@ -33121,10 +33093,8 @@
 		_createClass(BarList, [{
 			key: 'render',
 			value: function render() {
-				var _this4 = this;
-
 				var bars = this.props.bars.map(function (bar, index) {
-					return _react2.default.createElement(Bar, { bar: bar, key: index, going: _this4.props.going });
+					return _react2.default.createElement(Bar, { bar: bar, key: index });
 				});
 				return _react2.default.createElement(
 					_reactBootstrap.Panel,
@@ -33167,13 +33137,7 @@
 						_react2.default.createElement(
 							_reactBootstrap.Media.Heading,
 							null,
-							this.props.bar.name,
-							_react2.default.createElement(
-								_reactBootstrap.Button,
-								{ className: 'going', onClick: this.props.going.bind(this, this.props.bar) },
-								this.props.bar.attending.length,
-								' Going'
-							)
+							this.props.bar.name
 						),
 						_react2.default.createElement(
 							'p',

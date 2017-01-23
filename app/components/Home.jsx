@@ -13,6 +13,7 @@ class Home extends React.Component {
 
 		}
 		this.search = this.search.bind(this)
+		this.going = this.going.bind(this)
 	}
 	search(event){
 		if(this.state.isLoading)
@@ -48,6 +49,29 @@ class Home extends React.Component {
 		$('#search-input').val(location)
 		this.search()
 	}
+	going(bar){
+		console.log('going')
+		if(!this.props.profile)
+			return	
+		if(bar.attending.indexOf(this.props.profile._id)==-1){
+			bar.attending.push(this.props.profile._id)
+		}else{
+			bar.attending[bar.attending.indexOf(this.props.profile._id)] = null
+			bar.attending = bar.attending.filter((b)=>{
+				return b!=null
+			})
+		}
+		console.log(bar)
+		let newBars = this.state.bars.map(b=>{
+			if(b.name==bar.name)
+				return bar
+			return b
+		})
+		console.log(newBars)
+		this.setState({
+			bars:newBars
+		})
+	}
 	render() {
 		return (
 			<div>
@@ -77,7 +101,7 @@ class Home extends React.Component {
 						</Col>
 					</Row>
 				</Well>
-				<BarList bars={this.state.bars}/>
+				<BarList bars={this.state.bars} going={this.going}/>
 			</div>
 		)
 	}
@@ -89,7 +113,7 @@ class BarList extends React.Component{
 	}
 	render(){
 		let bars = this.props.bars.map((bar,index)=>{
-			return <Bar bar={bar} key={index}/>
+			return <Bar bar={bar} key={index} going={this.props.going}/>
 		})
 		return (
 			<Panel>
@@ -112,6 +136,7 @@ class Bar extends React.Component{
 				<Media.Body>
 				<Media.Heading>
 					{this.props.bar.name}
+					<Button className="going" onClick={this.props.going.bind(this,this.props.bar)}>{this.props.bar.attending.length} Going</Button>
 				</Media.Heading>
 				<p>{this.props.bar.snippet}</p>
 				</Media.Body>
