@@ -25,7 +25,23 @@ router.get('/bar/search/:query', function(req, res, next) {
                 attending: []
             };
         });
-   		res.json(extBars)
+        if(!req.isAuthenticated())
+       		res.json(extBars)
+        else{
+            Bar.find({
+
+            },function(err,bars){
+                extBars = extBars.map(function(bar){
+                    for(var i=0;i<bars.length;i++){
+                        if(bar.name == bars[i].name)
+                            return bars[i]
+                    }
+                    return bar
+                })
+                console.log(extBars)
+                res.json(extBars)
+            })
+        }
     })
     if(req.user){
         User.findOne({
