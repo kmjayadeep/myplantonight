@@ -1,6 +1,6 @@
 let $ = require('jquery')
 let promise = require('es6-promise')
-let resourceUrl = "http://localhost:3000/api/";
+let resourceUrl = "/api/";
 
 module.exports = {
     search: (query) => {

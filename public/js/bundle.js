@@ -21509,7 +21509,7 @@
 
 	var $ = __webpack_require__(180);
 	var promise = __webpack_require__(181);
-	var resourceUrl = "http://localhost:3000/api/";
+	var resourceUrl = "/api/";
 
 	module.exports = {
 	    search: function search(query) {
